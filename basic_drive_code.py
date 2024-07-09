@@ -4,7 +4,7 @@ import time
 class basic_X_drive:
 
     def __init__(self):
-        self.mc = motoron.MotoronI2C()
+        self.mc1 = motoron.MotoronI2C()
         self.configure_motors()
         self.cm.reinitialize()
         self.mc.disable_crc()
