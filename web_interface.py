@@ -22,8 +22,10 @@ available_people =['Goli','Alex', 'Craig']
 def index():
     return render_template('menu.html', robot_state=robot_state, sodas=available_sodas, people=available_people)
 
-@app.route('/deliver', methods=['POST'])
-def deliver():
+@app.route('/celisus_button')
+def go_to_fridge():
+def detection():
+
     data = request.json
     soda = data.get('soda')
     person = data.get('person')

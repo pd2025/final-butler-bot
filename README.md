@@ -17,6 +17,7 @@
    - `recognize_objects(image)` Function
    - `recognize_person(image)` Function
    - Integration with Other Modules
+   - visual SLAM/visual odometry
 
 5. Web/GUI Interface (web_interface.py)
    - Purpose
