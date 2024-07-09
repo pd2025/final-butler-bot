@@ -13,26 +13,25 @@ robot_state = {
     'current_task': 'Idle'
 }
 
+
+available_sodas = ['Celsius','Moutain Dew', 'Dr. Pepper']
+available_people =['Goli','Alex', 'Craig']
+
+#probably have to change names
 @app.route('/')
 def index():
-    return render_template('index.html', robot_state=robot_state)
+    return render_template('menu.html', robot_state=robot_state, sodas=available_sodas, people=available_people)
 
-@app.route('/move', methods=['POST'])
-def move():
+@app.route('/deliver', methods=['POST'])
+def deliver():
     data = request.json
-    direction = data.get('direction')
-    distance = data.get('distance')
-    # Here you would add the code to move the robot
-    # Example: move_robot(direction, distance)
-    return jsonify({'status': 'success', 'direction': direction, 'distance': distance})
+    soda = data.get('soda')
+    person = data.get('person')
+    # Here you would add the code to handle the autonomous delivery
+    # Example: start_delivery_task(soda, person)
+    robot_state['current_task'] = f'Delivering {soda} to {person}'
+    return jsonify({'status': 'success', 'soda': soda, 'distance': person})
 
-@app.route('/arm', methods=['POST'])
-def arm():
-    data = request.json
-    position = data.get('position')
-    # Here you would add the code to move the robot's arm
-    # Example: move_arm(position)
-    return jsonify({'status': 'success', 'position': position})
 
 @app.route('/status', methods=['GET'])
 def status():
