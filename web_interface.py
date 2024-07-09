@@ -24,7 +24,6 @@ def index():
 
 @app.route('/celisus_button')
 def go_to_fridge():
-def detection():
 
     data = request.json
     soda = data.get('soda')
