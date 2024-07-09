@@ -35,85 +35,65 @@ class basic_X_drive:
         self.mc2.set_speed(1, 0)
         self.mc2.set_speed(2, 0)
 
-    def move_forward(self, speed, time1):
+    def move_forward(self, speed):
         self.mc1.set_speed(1, speed)
         self.mc1.set_speed(2, speed)
         self.mc2.set_speed(1, speed)
         self.mc2.set_speed(2, speed)
-        time.sleep(time1)
-        self.stop_all_motors()
 
-    def move_reverse(self, speed, time1):
+    def move_reverse(self, speed):
         self.mc1.set_speed(1, -1 * speed)
         self.mc1.set_speed(2, -1 * speed)
         self.mc2.set_speed(1, -1 * speed)
         self.mc2.set_speed(2, -1 * speed)
-        time.sleep(time1)
-        self.stop_all_motors()
 
-    def translate_right(self, speed, time1):
+    def translate_right(self, speed):
         self.mc1.set_speed(1, -1 * speed)
         self.mc1.set_speed(2, speed)
         self.mc2.set_speed(1, speed)
         self.mc2.set_speed(2, -1 * speed)
-        time.sleep(time1)
-        self.stop_all_motors()
 
-    def translate_left(self, speed, time1):
+    def translate_left(self, speed):
         self.mc1.set_speed(1, speed)
         self.mc1.set_speed(2, -1 * speed)
         self.mc2.set_speed(1, -1 * speed)
         self.mc2.set_speed(2, speed)
-        time.sleep(time1)
-        self.stop_all_motors()
 
-    def move_front_right(self, speed, time1):
+    def move_front_right(self, speed):
         self.mc1.set_speed(1, 0)
         self.mc1.set_speed(2, speed)
         self.mc2.set_speed(1, speed)
         self.mc2.set_speed(2, 0)
-        time.sleep(time1)
-        self.stop_all_motors()
 
-    def move_back_right(self, speed, time1):
+    def move_back_right(self, speed):
         self.mc1.set_speed(1, 0)
         self.mc1.set_speed(2, -1 * speed)
         self.mc2.set_speed(1, -1 * speed)
         self.mc2.set_speed(2, 0)
-        time.sleep(time1)
-        self.stop_all_motors()
 
-    def move_front_left(self, speed, time1):
+    def move_front_left(self, speed):
         self.mc1.set_speed(1, speed)
         self.mc1.set_speed(2, 0)
         self.mc2.set_speed(1, 0)
         self.mc2.set_speed(2, speed)
-        time.sleep(time1)
-        self.stop_all_motors()
 
-    def move_back_left(self, speed, time1):
+    def move_back_left(self, speed):
         self.mc1.set_speed(1, -1 * speed)
         self.mc1.set_speed(2, 0)
         self.mc2.set_speed(1, 0)
         self.mc2.set_speed(2, -1 * speed)
-        time.sleep(time1)
-        self.stop_all_motors()
 
-    def turn_right(self, speed, time1):
-        self.mc1.set_speed(1, -1 * speed)
+    def turn_right(self, speed):
+        self.mc1.set_speed(1, speed)
         self.mc1.set_speed(2, speed)
-        self.mc2.set_speed(1, -1 * speed)
+        self.mc2.set_speed(1, speed)
         self.mc2.set_speed(2, speed)
-        time.sleep(time1)
-        self.stop_all_motors()
         
-    def turn_left(self, speed, time1):
-        self.mc1.set_speed(1, speed)
+    def turn_left(self, speed):
+        self.mc1.set_speed(1, -1 * speed)
         self.mc1.set_speed(2, -1 * speed)
-        self.mc2.set_speed(1, speed)
+        self.mc2.set_speed(1, -1 * speed)
         self.mc2.set_speed(2, -1 * speed)
-        time.sleep(time1)
-        self.stop_all_motors()
 
 drivetrain = basic_X_drive()
 
