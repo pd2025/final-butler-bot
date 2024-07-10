@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+      </style>
+    <script src="https://kit.fontawesome.com/97c36ad1a0.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="menu.css">
+
+</head>
+<body>
+      <header>
+      <div class="container">
+        <div class="subcontainer">
+          <nav class="navbar">
+            <a href="home.html" class="logo">ButlerBot.</a>
+            <ul class="nav-menu">
+
+              <li class="nav-item">
+                <a href="menu.html" class="nav-link">Menu</a>
+              </li>
+              <li class="nav-item">
+                <a href="team.html" class="nav-link">Team</a>
+              </li>
+              <li class="nav-item">
+                <a href="help.html" class="nav-link">Help</a>
+              </li>
+              <li> <button  class="butt" onclick="window.location.href = 'help.html';">Learn More</button></li>
+            
+            </ul>
+            <div class="hamburger"> 
+              <span class="bar"></span>
+              <span class="bar"></span>
+              <span class="bar"></span>
+
+            </div>
+          </nav>
+        </div>
+      </div>
+    </header>
+    <h1 class="intro"> Explore our menu and request a drink from our bot. See you soon!</h1>
+
+    <div class="card-list">
+      <div class="card-item">
+          <img src="zero1.png" alt="Image of Mountain Dew">
+          <h2>Mountain Dew</h2>
+          <p>Mtn Dew Zero Baja Blast soda exhilarates and quenches with its one of a kind, bold taste.</p>
+             <button class="btn-open-popup" onclick="togglePopup('Mountain dew')" role="button"> Order</button>
+            
+      </div>
+
+     
+      <div class="card-item">
+          <img src="dp.png" alt="Image of Dr.Pepper">
+          <h2>Dr.Pepper</h2>
+          <p>Discover the crisp, unique taste of Diet Dr.Pepper, a satisfying and calorie-friendly alternative.</p>
+             <button class=" btn-open-popup button-18" onclick="togglePopup('Dr.Pepper')" role="button"> Order</button>
+
+          
+          </div>
+      <div class="card-item">
+          <img src="kiwi.png" alt="Image if Celsius">
+          <h2>Kiwi Guava Celsius</h2>
+          <p>CELSIUS Sparkling Kiwi Guava offers a tropical flavor with tart kiwi and juicy guava in every sip.</p>
+          <button class=" btn-open-popup Celsius" onclick="togglePopup(Celsius)" role="button"> Order</button>
+      </div>
+  </div>
+ 
+  
+  
+
+	
+    <div id="popupOverlay"
+      class="overlay-container"> 
+      <div class="popup-box"> 
+        <h2>Good Choice!</h2> 
+        <p>Scroll</p>
+        <form class="form-container" action="server-thingy-idk" method="post"> 
+          <div class="custom-select" style="width:200px;">
+
+             <select name="name">             
+              <option value="0">Select Name</option>
+              <option value="Craig">Craig</option>
+              <option value="Goli">Goli</option>
+              <option value="Alex">Alex</option>
+              
+            </select>
+          </div>
+
+          <input type="hidden" name="drink" id="selectedDrink">
+          <button class="btn-submit"
+              type="submit"> 
+          Submit 
+          </button> 
+        </form> 
+  
+        <button class="btn-close-popup"
+            onclick="togglePopup()"> 
+        Close 
+        </button> 
+      </div> 
+    </div> 
+  
+    <script> 
+      function togglePopup(drink) { 
+        const overlay = document.getElementById('popupOverlay'); 
+        overlay.classList.toggle('show'); 
+        if (drink) {
+      
+          document.getElementById('selectedDrink').value = drink;
+    }
+      } 
+    </script> 
+  
+    <footer class="footer">
+  
+      <div class="icons">  
+        <a href="https://www.ghpstudentsite.com/engineering" target="_blank" class="fa-solid fa-microchip" ></a>
+          <a href="https://www.instagram.com/butlerbotworks/?igsh=MTE5NXh5eXUxd3o2eQ%3D%3D&utm_source=qr" target="_blank" class="fa-brands fa-square-instagram" ></a>
+        </div>
+
+      <p class="credits">All rights reserved to ©ButlerBotWorks</p>
+</footer>
+     
+  <script src="main.js"></script>
+  <script>
+    var x, i, j, l, ll, selElmnt, a, b, c;
+    
+    x = document.getElementsByClassName("custom-select");
+    l = x.length;
+    for (i = 0; i < l; i++) {
+      selElmnt = x[i].getElementsByTagName("select")[0];
+      ll = selElmnt.length;
+      
+      a = document.createElement("DIV");
+      a.setAttribute("class", "select-selected");
+      a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+      x[i].appendChild(a);
+     
+      b = document.createElement("DIV");
+      b.setAttribute("class", "select-items select-hide");
+      for (j = 1; j < ll; j++) {
+       
+        c = document.createElement("DIV");
+        c.innerHTML = selElmnt.options[j].innerHTML;
+        c.addEventListener("click", function(e) {
+           
+            var y, i, k, s, h, sl, yl;
+            s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+            sl = s.length;
+            h = this.parentNode.previousSibling;
+            for (i = 0; i < sl; i++) {
+              if (s.options[i].innerHTML == this.innerHTML) {
+                s.selectedIndex = i;
+                h.innerHTML = this.innerHTML;
+                y = this.parentNode.getElementsByClassName("same-as-selected");
+                yl = y.length;
+                for (k = 0; k < yl; k++) {
+                  y[k].removeAttribute("class");
+                }
+                this.setAttribute("class", "same-as-selected");
+                break;
+              }
+            }
+            h.click();
+        });
+        b.appendChild(c);
+      }
+      x[i].appendChild(b);
+      a.addEventListener("click", function(e) {
+         
+          e.stopPropagation();
+          closeAllSelect(this);
+          this.nextSibling.classList.toggle("select-hide");
+          this.classList.toggle("select-arrow-active");
+        });
+    }
+    function closeAllSelect(elmnt) {
+      var x, y, i, xl, yl, arrNo = [];
+      x = document.getElementsByClassName("select-items");
+      y = document.getElementsByClassName("select-selected");
+      xl = x.length;
+      yl = y.length;
+      for (i = 0; i < yl; i++) {
+        if (elmnt == y[i]) {
+          arrNo.push(i)
+        } else {
+          y[i].classList.remove("select-arrow-active");
+        }
+      }
+      for (i = 0; i < xl; i++) {
+        if (arrNo.indexOf(i)) {
+          x[i].classList.add("select-hide");
+        }
+      }
+    }
+  
+    document.addEventListener("click", closeAllSelect);
+    </script>
+    
+</body>
+</html>
