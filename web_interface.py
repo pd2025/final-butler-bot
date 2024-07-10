@@ -2,6 +2,7 @@
 from flask import Flask, render_template, request, jsonify
 import json
 
+
 app = Flask(__name__)
 
 # Mock data to simulate robot state
@@ -14,7 +15,7 @@ robot_state = {
 }
 
 
-available_sodas = ['Celsius','Moutain Dew', 'Dr. Pepper']
+available_sodas = ['Celsius','Moutain Dew', 'Dr.Pepper']
 available_people =['Goli','Alex', 'Craig']
 
 #probably have to change names
@@ -22,7 +23,7 @@ available_people =['Goli','Alex', 'Craig']
 def index():
     return render_template('menu.html', robot_state=robot_state, sodas=available_sodas, people=available_people)
 
-@app.route('/celisus_button')
+@app.route('#')
 def go_to_fridge():
 
     data = request.json
