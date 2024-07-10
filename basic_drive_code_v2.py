@@ -1,5 +1,7 @@
 import motoron
 import time
+import serial
+
 
 class basic_X_drive:
 
@@ -25,83 +27,71 @@ class basic_X_drive:
         self.mc2.set_max_acceleration(1,  140)
         self.mc2.set_max_deceleration(1, 300)
 
-        # config motor 4 - back left (mc2)
-        self.mc2.set_max_acceleration(2,  140)
-        self.mc2.set_max_deceleration(2, 300)
+    def ardMotor(self, speed):
+        if speed > 0: 
+            self.ser.write(b'H')
+        elif speed < 0: 
+            self.ser.write(b'L')
+
+        # Send a signal to the Arduino to stop the motor
+        self.ser.write(b'S')  # Send 'S' to the Arduino
 
     def stop_all_motors(self):
         self.mc1.set_speed(1, 0)
         self.mc1.set_speed(2, 0)
         self.mc2.set_speed(1, 0)
-        self.mc2.set_speed(2, 0)
+        self.ser.write(b'S')
 
     def move_forward(self, speed):
         self.mc1.set_speed(1, speed)
         self.mc1.set_speed(2, speed)
         self.mc2.set_speed(1, speed)
-        self.mc2.set_speed(2, speed)
+        self.ardMotor(speed)
 
     def move_reverse(self, speed):
         self.mc1.set_speed(1, -1 * speed)
         self.mc1.set_speed(2, -1 * speed)
         self.mc2.set_speed(1, -1 * speed)
-        self.mc2.set_speed(2, -1 * speed)
+        self.ardMotor(-1 * speed)
 
     def translate_right(self, speed):
         self.mc1.set_speed(1, -1 * speed)
         self.mc1.set_speed(2, speed)
         self.mc2.set_speed(1, speed)
-        self.mc2.set_speed(2, -1 * speed)
+        self.ardMotor(-1 * speed)
 
     def translate_left(self, speed):
         self.mc1.set_speed(1, speed)
         self.mc1.set_speed(2, -1 * speed)
         self.mc2.set_speed(1, -1 * speed)
-        self.mc2.set_speed(2, speed)
-
-    def move_front_right(self, speed):
-        self.mc1.set_speed(1, 0)
-        self.mc1.set_speed(2, speed)
-        self.mc2.set_speed(1, speed)
-        self.mc2.set_speed(2, 0)
-
-    def move_back_right(self, speed):
-        self.mc1.set_speed(1, 0)
-        self.mc1.set_speed(2, -1 * speed)
-        self.mc2.set_speed(1, -1 * speed)
-        self.mc2.set_speed(2, 0)
-
-    def move_front_left(self, speed):
-        self.mc1.set_speed(1, speed)
-        self.mc1.set_speed(2, 0)
-        self.mc2.set_speed(1, 0)
-        self.mc2.set_speed(2, speed)
-
-    def move_back_left(self, speed):
-        self.mc1.set_speed(1, -1 * speed)
-        self.mc1.set_speed(2, 0)
-        self.mc2.set_speed(1, 0)
-        self.mc2.set_speed(2, -1 * speed)
+        self.ardMotor(speed)
 
     def turn_right(self, speed):
         self.mc1.set_speed(1, speed)
         self.mc1.set_speed(2, speed)
         self.mc2.set_speed(1, speed)
-        self.mc2.set_speed(2, speed)
+        self.ardMotor(speed)
         
     def turn_left(self, speed):
         self.mc1.set_speed(1, -1 * speed)
         self.mc1.set_speed(2, -1 * speed)
         self.mc2.set_speed(1, -1 * speed)
-        self.mc2.set_speed(2, -1 * speed)
+        self.ardMotor(-1 * speed)
+
+
+ser = serial.Serial('/dev/ttyS0', 9600, timeout=1)  # Replace '/dev/ttyS0' with your serial port
+time.sleep(2)  # Wait for the connection to be established
 
 drivetrain = basic_X_drive()
 
 try:
-    drivetrain.move_forward(800, 1)
-    drivetrain.move_reverse(800, 1)
-    drivetrain.translate_right(800, 1)
-    drivetrain.translate_left(800, 1)
+    drivetrain.move_forward(800)
+    drivetrain.move_reverse(800)
+    drivetrain.translate_right(800)
+    drivetrain.translate_left(800)
 
 except KeyboardInterrupt:
     pass
+finally:
+    drivetrain.stop_all_motors()
+    ser.close()
