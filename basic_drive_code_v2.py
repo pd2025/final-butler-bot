@@ -1,7 +1,6 @@
 import motoron
 import time
-import serial
-
+import RPi.GPIO as GPIO
 
 class basic_X_drive:
 
@@ -13,6 +12,11 @@ class basic_X_drive:
         self.mc2.reinitialize()
         self.mc1.disable_crc()
         self.mc2.disable_crc()
+        self.MOVE_PIN = 23
+        self.DIR_PIN = 24
+        GPIO.setmode(GPIO.BCM)  # Set GPIO numbering scheme to BCM
+        GPIO.setup(self.MOVE_PIN, GPIO.OUT)  # Set GPIO_PIN as an output pin
+        GPIO.setup(self.DIR_PIN, GPIO.OUT)
 
     def configure_motors(self):
         # config motor 1 - front right (mc1)
@@ -28,19 +32,21 @@ class basic_X_drive:
         self.mc2.set_max_deceleration(1, 300)
 
     def ardMotor(self, speed):
-        if speed > 0: 
-            self.ser.write(b'H')
-        elif speed < 0: 
-            self.ser.write(b'L')
+        GPIO.output(self.MOVE_PIN, GPIO.HIGH)
 
-        # Send a signal to the Arduino to stop the motor
-        self.ser.write(b'S')  # Send 'S' to the Arduino
+        if speed > 0: 
+            GPIO.output(self.DIR_PIN, GPIO.HIGH)
+        elif speed < 0: 
+            GPIO.output(self.DIR_PIN, GPIO.LOW)
+
+    def ardMotorStop(self):
+        GPIO.output(self.MOVE_PIN, GPIO.LOW)
 
     def stop_all_motors(self):
         self.mc1.set_speed(1, 0)
         self.mc1.set_speed(2, 0)
         self.mc2.set_speed(1, 0)
-        self.ser.write(b'S')
+        self.ardMotorStop(self)
 
     def move_forward(self, speed):
         self.mc1.set_speed(1, speed)
@@ -78,10 +84,6 @@ class basic_X_drive:
         self.mc2.set_speed(1, -1 * speed)
         self.ardMotor(-1 * speed)
 
-
-ser = serial.Serial('/dev/ttyS0', 9600, timeout=1)  # Replace '/dev/ttyS0' with your serial port
-time.sleep(2)  # Wait for the connection to be established
-
 drivetrain = basic_X_drive()
 
 try:
@@ -94,4 +96,3 @@ except KeyboardInterrupt:
     pass
 finally:
     drivetrain.stop_all_motors()
-    ser.close()
