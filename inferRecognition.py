@@ -1,5 +1,5 @@
 from roboflow import Roboflow
-import cv2
+import cv2 
 
 rf = Roboflow(api_key="sBjnK2nsooh1jA9mXNRS")
 project = rf.workspace().project("butlerbot")
@@ -51,4 +51,3 @@ while True:
 
 # Release resources
 cap.release()
-cv2.destroyAllWindows()
